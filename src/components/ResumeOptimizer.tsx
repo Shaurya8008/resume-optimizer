@@ -99,25 +99,26 @@ export default function ResumeOptimizer() {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12 md:py-20 flex flex-col gap-12 relative">
-      {/* Decorative Gradients */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl -z-10 pointer-events-none"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+      {/* Abstract Background Shapes */}
+      <div className="absolute top-0 -left-40 w-96 h-96 bg-blue-500 rounded-full mix-blend-screen filter blur-[128px] opacity-30 animate-blob" />
+      <div className="absolute top-0 -right-40 w-96 h-96 bg-purple-500 rounded-full mix-blend-screen filter blur-[128px] opacity-30 animate-blob animation-delay-2000" />
+      <div className="absolute -bottom-40 left-20 w-96 h-96 bg-pink-500 rounded-full mix-blend-screen filter blur-[128px] opacity-30 animate-blob animation-delay-4000" />
 
       {/* Hero Section */}
       <div className="text-center space-y-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm text-gray-300"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 border border-white/20 text-sm text-gray-100 backdrop-blur-md"
         >
-          <Sparkles className="w-4 h-4 text-purple-400" />
-          <span>AI-Powered Resume Tailoring</span>
+          <Sparkles className="w-4 h-4 text-purple-300" />
+          <span className="font-medium">AI-Powered Resume Tailoring</span>
         </motion.div>
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-br from-white to-gray-500 bg-clip-text text-transparent"
+          className="text-5xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-br from-white via-white to-gray-300 bg-clip-text text-transparent drop-shadow-sm"
         >
           Optimize for the Job.
         </motion.h1>
@@ -125,7 +126,7 @@ export default function ResumeOptimizer() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto"
+          className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto font-medium"
         >
           Match your resume perfectly to the job description. Beat the ATS, highlight your strengths, and land more interviews.
         </motion.p>
@@ -139,9 +140,9 @@ export default function ResumeOptimizer() {
           transition={{ delay: 0.3 }}
           className="flex flex-col gap-6"
         >
-          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-6 flex flex-col gap-4 shadow-2xl">
-            <h2 className="text-xl font-semibold flex items-center gap-2">
-              <FileText className="w-5 h-5 text-blue-400" />
+          <div className="bg-gray-950/60 border border-white/20 backdrop-blur-2xl rounded-2xl p-6 flex flex-col gap-4 shadow-2xl">
+            <h2 className="text-xl font-bold flex items-center gap-2 text-white">
+              <FileText className="w-6 h-6 text-blue-400" />
               1. Upload Resume (PDF)
             </h2>
             
@@ -151,7 +152,7 @@ export default function ResumeOptimizer() {
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
               className={`relative flex flex-col items-center justify-center p-8 border-2 border-dashed rounded-xl cursor-pointer transition-all ${
-                isDragging ? 'border-blue-500 bg-blue-500/10' : 'border-white/10 hover:border-white/20 hover:bg-white/5'
+                isDragging ? 'border-blue-400 bg-blue-500/20' : 'border-white/30 hover:border-white/50 hover:bg-white/10'
               }`}
             >
               <input 
@@ -162,18 +163,18 @@ export default function ResumeOptimizer() {
                 className="hidden" 
               />
               {resumeFile ? (
-                <div className="flex items-center gap-3 text-blue-400" onClick={(e) => e.stopPropagation()}>
+                <div className="flex items-center gap-3 text-blue-300" onClick={(e) => e.stopPropagation()}>
                   <FileText className="w-8 h-8" />
-                  <span className="font-medium truncate max-w-[200px]">{resumeFile.name}</span>
-                  <button onClick={clearFile} className="p-1 hover:bg-white/10 rounded-full transition-colors text-gray-400 hover:text-white">
-                    <X className="w-4 h-4" />
+                  <span className="font-semibold truncate max-w-[200px] text-white">{resumeFile.name}</span>
+                  <button onClick={clearFile} className="p-1 hover:bg-white/20 rounded-full transition-colors text-gray-300 hover:text-white">
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
               ) : (
                 <>
-                  <UploadCloud className="w-10 h-10 text-gray-500 mb-3" />
-                  <p className="text-sm text-gray-400 text-center">
-                    <span className="text-white font-medium">Click to upload</span> or drag and drop<br />
+                  <UploadCloud className="w-12 h-12 text-gray-300 mb-3" />
+                  <p className="text-base text-gray-300 text-center font-medium">
+                    <span className="text-white font-bold underline decoration-white/30 underline-offset-2">Click to upload</span> or drag and drop<br />
                     PDF files only.
                   </p>
                 </>
@@ -181,16 +182,16 @@ export default function ResumeOptimizer() {
             </div>
           </div>
 
-          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-6 flex flex-col gap-4 shadow-2xl">
-            <h2 className="text-xl font-semibold flex items-center gap-2">
-              <FileText className="w-5 h-5 text-purple-400" />
+          <div className="bg-gray-950/60 border border-white/20 backdrop-blur-2xl rounded-2xl p-6 flex flex-col gap-4 shadow-2xl">
+            <h2 className="text-xl font-bold flex items-center gap-2 text-white">
+              <FileText className="w-6 h-6 text-purple-400" />
               2. Paste Job Description
             </h2>
             <textarea
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
               placeholder="Paste the job description here..."
-              className="w-full h-48 bg-black/50 border border-white/10 rounded-xl p-4 text-sm text-gray-300 placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 resize-none transition-all"
+              className="w-full h-48 bg-black/80 border border-white/20 rounded-xl p-4 text-base text-gray-100 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400/50 resize-none transition-all shadow-inner"
             />
           </div>
 
@@ -229,13 +230,13 @@ export default function ResumeOptimizer() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="h-full bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-8 flex flex-col items-center justify-center text-center shadow-2xl min-h-[500px]"
+                className="h-full bg-gray-950/60 border border-white/20 backdrop-blur-2xl rounded-2xl p-8 flex flex-col items-center justify-center text-center shadow-2xl min-h-[500px]"
               >
-                <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mb-6">
-                  <Sparkles className="w-10 h-10 text-gray-600" />
+                <div className="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center mb-6 shadow-inner">
+                  <Sparkles className="w-12 h-12 text-white" />
                 </div>
-                <h3 className="text-xl font-medium text-gray-300 mb-2">Awaiting Analysis</h3>
-                <p className="text-gray-500 text-sm max-w-[250px]">
+                <h3 className="text-2xl font-bold text-white mb-3">Awaiting Analysis</h3>
+                <p className="text-gray-200 text-base max-w-[300px] leading-relaxed">
                   Upload your resume and paste a job description to see how well you match.
                 </p>
               </motion.div>
@@ -244,56 +245,56 @@ export default function ResumeOptimizer() {
                 key="results"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="h-full bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-6 flex flex-col gap-8 shadow-2xl overflow-hidden relative"
+                className="h-full bg-gray-950/60 border border-white/20 backdrop-blur-2xl rounded-2xl p-6 flex flex-col gap-8 shadow-2xl overflow-hidden relative"
               >
                 {/* Match Score */}
                 <div className="flex flex-col items-center gap-4">
                   <CircularProgress score={results.matchScore} />
                   <div className="text-center">
-                    <h3 className="text-lg font-semibold">ATS Compatibility Score</h3>
-                    <p className="text-sm text-gray-400">Based on keyword matching and relevance.</p>
+                    <h3 className="text-xl font-bold text-white">ATS Compatibility Score</h3>
+                    <p className="text-base text-gray-300 font-medium mt-1">Based on keyword matching and relevance.</p>
                   </div>
                 </div>
 
                 {/* Keywords Analysis */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-green-500/5 border border-green-500/20 rounded-xl p-4 flex flex-col gap-3">
-                    <h4 className="text-sm font-semibold text-green-400 flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" /> Matched
+                  <div className="bg-green-950/60 border border-green-500/40 rounded-xl p-5 flex flex-col gap-4 shadow-inner">
+                    <h4 className="text-base font-bold text-green-300 flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5" /> Matched
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {results.matchedKeywords.map((kw, i) => (
-                        <span key={i} className="bg-green-500/20 text-green-300 text-xs px-2 py-1 rounded-md">
+                        <span key={i} className="bg-green-500/30 text-green-100 text-sm px-3 py-1.5 rounded-lg border border-green-500/30 font-medium shadow-sm">
                           {kw}
                         </span>
                       ))}
-                      {results.matchedKeywords.length === 0 && <span className="text-xs text-gray-500">None found</span>}
+                      {results.matchedKeywords.length === 0 && <span className="text-sm text-green-200/50 italic">None found</span>}
                     </div>
                   </div>
                   
-                  <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-4 flex flex-col gap-3">
-                    <h4 className="text-sm font-semibold text-red-400 flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4" /> Missing
+                  <div className="bg-red-950/60 border border-red-500/40 rounded-xl p-5 flex flex-col gap-4 shadow-inner">
+                    <h4 className="text-base font-bold text-red-300 flex items-center gap-2">
+                      <AlertCircle className="w-5 h-5" /> Missing
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {results.missingKeywords.map((kw, i) => (
-                        <span key={i} className="bg-red-500/20 text-red-300 text-xs px-2 py-1 rounded-md">
+                        <span key={i} className="bg-red-500/30 text-red-100 text-sm px-3 py-1.5 rounded-lg border border-red-500/30 font-medium shadow-sm">
                           {kw}
                         </span>
                       ))}
-                      {results.missingKeywords.length === 0 && <span className="text-xs text-gray-500">None found</span>}
+                      {results.missingKeywords.length === 0 && <span className="text-sm text-red-200/50 italic">None found</span>}
                     </div>
                   </div>
                 </div>
 
                 {/* Actionable Feedback */}
-                <div className="flex flex-col gap-3">
-                  <h4 className="text-lg font-semibold border-b border-white/10 pb-2">Actionable Suggestions</h4>
-                  <ul className="space-y-3">
+                <div className="flex flex-col gap-4">
+                  <h4 className="text-xl font-bold text-white border-b border-white/20 pb-3">Actionable Suggestions</h4>
+                  <ul className="space-y-4">
                     {results.suggestions.map((suggestion, i) => (
-                      <li key={i} className="flex gap-3 text-sm text-gray-300 bg-white/5 p-3 rounded-lg border border-white/5">
-                        <Sparkles className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                        <span>{suggestion}</span>
+                      <li key={i} className="flex gap-4 text-base text-gray-100 bg-white/10 p-4 rounded-xl border border-white/10 shadow-sm">
+                        <Sparkles className="w-5 h-5 text-purple-300 flex-shrink-0 mt-0.5" />
+                        <span className="font-medium leading-relaxed">{suggestion}</span>
                       </li>
                     ))}
                   </ul>

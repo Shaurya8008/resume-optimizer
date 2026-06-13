@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-
-// Turbopack workaround for CommonJS module
-const pdfParse = require('pdf-parse');
+const PDFParser = require('pdf2json');
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,11 +15,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Extract text from PDF
+    // Extract text from PDF using pdf2json
     const arrayBuffer = await resumeFile.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const pdfData = await pdfParse(buffer);
-    const resumeText = pdfData.text;
+    
+    const resumeText = await new Promise<string>((resolve, reject) => {
+      const pdfParser = new PDFParser(this, 1);
+      pdfParser.on('pdfParser_dataError', (errData: any) => reject(errData.parserError));
+      pdfParser.on('pdfParser_dataReady', () => {
+        resolve(pdfParser.getRawTextContent());
+      });
+      pdfParser.parseBuffer(buffer);
+    });
 
     if (!resumeText.trim()) {
       return NextResponse.json(
@@ -34,13 +39,13 @@ export async function POST(req: NextRequest) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { error: 'Gemini API key is not configured.' },
+        { error: 'Gemini API key is not configured on the server.' },
         { status: 500 }
       );
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const prompt = `
     You are an expert ATS (Applicant Tracking System) and Senior Technical Recruiter.
@@ -78,7 +83,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error('Error optimizing resume:', error);
     return NextResponse.json(
-      { error: 'Failed to optimize resume. Please try again.' },
+      { error: error.message || 'Failed to optimize resume. Please try again.' },
       { status: 500 }
     );
   }
