@@ -6,8 +6,10 @@ Resume Optimizer is a state-of-the-art web application designed to help job seek
 
 - **AI-Powered Analysis**: Uses Gemini to analyze your resume against the job description.
 - **ATS Compatibility Score**: Get a direct score of how well your resume matches the job requirements.
+- **Skills Radar Chart**: Visualizes your top strengths and matches across 5 professional categories.
 - **Keyword Extraction**: Easily see what keywords you successfully hit and which critical keywords you are missing.
 - **Actionable Suggestions**: Receive specific, tailored advice on what to change or add to your resume.
+- **Magic Cover Letter Generator**: Automatically drafts a highly tailored, compelling cover letter in seconds based on your resume and the target job description.
 - **PDF Upload**: Upload your resume directly as a PDF (parsing happens server-side).
 - **Stunning UI**: A sleek, dark-mode, glassmorphic interface built with Next.js, Tailwind CSS, and Framer Motion.
 
@@ -17,6 +19,7 @@ Resume Optimizer is a state-of-the-art web application designed to help job seek
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS v4
 - **Animations**: Framer Motion
+- **Charts**: Recharts
 - **AI Integration**: `@google/generative-ai` SDK (Gemini 2.5 Flash)
 - **PDF Parsing**: `pdf2json`
 - **Icons**: Lucide React
