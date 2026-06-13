@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Resume Optimizer
 
-## Getting Started
+Resume Optimizer is a state-of-the-art web application designed to help job seekers tailor their resumes to perfectly match any job description. By leveraging the power of Google's Gemini AI, this application provides an intelligent, ATS-like analysis of your resume and gives you actionable feedback on how to improve your chances of landing an interview.
 
-First, run the development server:
+## 🌟 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **AI-Powered Analysis**: Uses Gemini to analyze your resume against the job description.
+- **ATS Compatibility Score**: Get a direct score of how well your resume matches the job requirements.
+- **Keyword Extraction**: Easily see what keywords you successfully hit and which critical keywords you are missing.
+- **Actionable Suggestions**: Receive specific, tailored advice on what to change or add to your resume.
+- **PDF Upload**: Upload your resume directly as a PDF (parsing happens server-side).
+- **Stunning UI**: A sleek, dark-mode, glassmorphic interface built with Next.js, Tailwind CSS, and Framer Motion.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Technology Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **Animations**: Framer Motion
+- **AI Integration**: `@google/generative-ai` SDK (Gemini 2.5 Flash)
+- **PDF Parsing**: `pdf2json`
+- **Icons**: Lucide React
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Getting Started
 
-## Learn More
+### Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+Make sure you have Node.js and npm installed on your machine. You will also need a Google Gemini API key.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Shaurya8008/resume-optimizer.git
+   cd resume-optimizer
+   ```
 
-## Deploy on Vercel
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Set up Environment Variables:**
+   Create a `.env.local` file in the root of your project and add your Gemini API Key:
+   ```env
+   GEMINI_API_KEY="your_api_key_here"
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Run the Development Server:**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open the Application:**
+   Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+
+## 💡 Usage
+
+1. Click the upload area to select your Resume PDF (or drag and drop).
+2. Paste the text of the Job Description you want to apply for into the text box.
+3. Click the **"Optimize Resume"** button.
+4. Wait a few seconds for the AI to process, and read through your personalized match score, keyword analysis, and suggestions!
+
+## 📜 License
+
+This project is open-source and available under the MIT License.
