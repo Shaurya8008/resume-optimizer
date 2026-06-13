@@ -54,7 +54,14 @@ export async function POST(req: NextRequest) {
       "matchScore": <number between 0 and 100>,
       "matchedKeywords": [<array of strings>],
       "missingKeywords": [<array of strings>],
-      "suggestions": [<array of strings of actionable advice to improve the resume for this role>]
+      "suggestions": [<array of strings of actionable advice to improve the resume for this role>],
+      "skillsAnalysis": [
+        { "category": "Technical", "score": <number between 0 and 100 based on resume vs JD match> },
+        { "category": "Leadership", "score": <number between 0 and 100> },
+        { "category": "Communication", "score": <number between 0 and 100> },
+        { "category": "Problem Solving", "score": <number between 0 and 100> },
+        { "category": "Domain Expertise", "score": <number between 0 and 100> }
+      ]
     }
     
     Ensure the output is ONLY valid JSON without any markdown formatting like \`\`\`json.

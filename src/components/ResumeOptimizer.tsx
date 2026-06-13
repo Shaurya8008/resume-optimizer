@@ -2,8 +2,9 @@
 
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { UploadCloud, FileText, CheckCircle, AlertCircle, Loader2, Sparkles, X } from 'lucide-react';
+import { UploadCloud, FileText, CheckCircle, AlertCircle, Loader2, Sparkles, X, Edit3 } from 'lucide-react';
 import CircularProgress from './CircularProgress';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 
 export default function ResumeOptimizer() {
   const [resumeFile, setResumeFile] = useState<File | null>(null);
@@ -16,7 +17,11 @@ export default function ResumeOptimizer() {
     matchedKeywords: string[];
     missingKeywords: string[];
     suggestions: string[];
+    skillsAnalysis: { category: string; score: number }[];
   } | null>(null);
+  
+  const [coverLetter, setCoverLetter] = useState<string | null>(null);
+  const [isGeneratingLetter, setIsGeneratingLetter] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -94,6 +99,39 @@ export default function ResumeOptimizer() {
       setError(err.message || 'An unexpected error occurred.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleGenerateCoverLetter = async () => {
+    if (!resumeFile || !jobDescription.trim()) {
+      setError('Please provide both resume and job description.');
+      return;
+    }
+
+    setIsGeneratingLetter(true);
+    setError(null);
+
+    const formData = new FormData();
+    formData.append('resume', resumeFile);
+    formData.append('jobDescription', jobDescription);
+
+    try {
+      const response = await fetch('/api/cover-letter', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to generate cover letter.');
+      }
+
+      const data = await response.json();
+      setCoverLetter(data.coverLetter);
+    } catch (err: any) {
+      setError(err.message || 'An unexpected error occurred.');
+    } finally {
+      setIsGeneratingLetter(false);
     }
   };
 
@@ -256,6 +294,23 @@ export default function ResumeOptimizer() {
                   </div>
                 </div>
 
+                {/* Skills Radar Chart */}
+                {results.skillsAnalysis && results.skillsAnalysis.length > 0 && (
+                  <div className="bg-gray-950/40 border border-white/10 rounded-xl p-4 flex flex-col items-center">
+                    <h4 className="text-lg font-bold text-white mb-2">Skills Match Radar</h4>
+                    <div className="w-full h-64">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <RadarChart cx="50%" cy="50%" outerRadius="70%" data={results.skillsAnalysis}>
+                          <PolarGrid stroke="rgba(255,255,255,0.2)" />
+                          <PolarAngleAxis dataKey="category" tick={{ fill: 'rgba(255,255,255,0.7)', fontSize: 12 }} />
+                          <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+                          <Radar name="Match Score" dataKey="score" stroke="#a855f7" fill="#a855f7" fillOpacity={0.5} />
+                        </RadarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+                )}
+
                 {/* Keywords Analysis */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-green-950/60 border border-green-500/40 rounded-xl p-5 flex flex-col gap-4 shadow-inner">
@@ -298,6 +353,41 @@ export default function ResumeOptimizer() {
                       </li>
                     ))}
                   </ul>
+                </div>
+
+                {/* Cover Letter Section */}
+                <div className="flex flex-col gap-4 mt-4 border-t border-white/20 pt-6">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xl font-bold text-white flex items-center gap-2">
+                      <Edit3 className="w-6 h-6 text-blue-400" />
+                      Magic Cover Letter
+                    </h4>
+                    <button
+                      onClick={handleGenerateCoverLetter}
+                      disabled={isGeneratingLetter}
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold transition-colors disabled:opacity-50 flex items-center gap-2 shadow-lg"
+                    >
+                      {isGeneratingLetter ? (
+                        <><Loader2 className="w-5 h-5 animate-spin" /> Drafting...</>
+                      ) : (
+                        <><Sparkles className="w-5 h-5" /> {coverLetter ? 'Regenerate' : 'Generate Letter'}</>
+                      )}
+                    </button>
+                  </div>
+                  
+                  {coverLetter && (
+                    <div className="bg-black/80 border border-white/20 rounded-xl p-6 shadow-inner mt-2">
+                      <div className="whitespace-pre-wrap text-gray-200 leading-relaxed font-medium text-sm md:text-base">
+                        {coverLetter}
+                      </div>
+                      <button
+                        onClick={() => navigator.clipboard.writeText(coverLetter)}
+                        className="mt-4 text-sm text-blue-400 hover:text-blue-300 underline underline-offset-4 font-bold"
+                      >
+                        Copy to Clipboard
+                      </button>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             )}
